@@ -1,18 +1,13 @@
 const express = require('express')
 const app = express()
 const cors = require('cors');
-// const admin = require("firebase-admin");
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 const ObjectId = require('mongodb').ObjectId;
 
 const port = process.env.PORT || 5000;
 
-// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount)
-// });
 
 app.use(cors());
 app.use(express.json());
@@ -24,21 +19,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 
 
-// async function verifyToken(req, res, next) {
-//     if (req.headers?.authorization?.startsWith('Bearer ')) {
-//         const token = req.headers.authorization.split(' ')[1];
 
-//         try {
-//             const decodedUser = await admin.auth().verifyIdToken(token);
-//             req.decodedEmail = decodedUser.email;
-//         }
-//         catch {
-
-//         }
-
-//     }
-//     next();
-// }
 
 async function run() {
 
@@ -156,11 +137,6 @@ async function run() {
         app.put('/users/admin', async (req, res) => {
             const user = req.body;
             console.log('put', user);
-
-            //             const requester = req.decodedEmail;
-            //             if (requester) {
-            //                 const requesterAccount = await usersCollection.findOne({ email: requester });
-            //                 if (requesterAccount.role === 'admin') {
             const filter = { email: user.email };
             const updateDoc = { $set: { role: 'admin' } };
             const result = await usersCollection.updateOne(filter, updateDoc);
@@ -168,15 +144,7 @@ async function run() {
         })
 
     }
-    //                 }
-    //             }
-    //             else {
-    //                 res.status(403).json({ message: 'you do not have access to make admin' })
-    //             }
 
-    //         })
-
-    //     }
     finally {
         // await client.close();
     }
@@ -192,10 +160,3 @@ app.listen(port, () => {
     console.log(`listening at ${port}`)
 })
 
-// app.get('/users')
-// app.post('/users')
-// app.get('/users/:id')
-// app.put('/users/:id');
-// app.delete('/users/:id')
-// users: get
-// users: post
