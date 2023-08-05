@@ -23,7 +23,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
 
     try {
-        await client.connect();
+        // await client.connect();
 
 
         const database = client.db('bicycle_shop');
@@ -159,4 +159,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`listening at ${port}`)
 })
-
